@@ -1,0 +1,19 @@
+mtllib 08-material.mtl
+v 0.67727 0.0 0.67727
+v 0.32273 0.0 0.67727
+v 0.67727 0.0 0.32273
+v 0.67727 1.0 0.67727
+v 0.32273 1.0 0.67727
+v 0.67727 1.0 0.32273
+g Mesh1 Brown_Cliff_Corner_Green_Top Model
+usemtl Wood
+f 1 2 3
+f 4 2 1
+f 2 4 5
+usemtl Leafs
+f 6 5 4
+usemtl Wood
+f 6 2 5
+f 2 6 3
+f 4 3 6
+f 3 4 1

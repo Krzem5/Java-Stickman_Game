@@ -1,0 +1,35 @@
+newmtl roof
+Kd 0.2588235 0.6784314 0.5294118
+
+newmtl wood
+Kd 0.9098039 0.5490196 0.3490196
+
+newmtl roofLight
+Kd 0.2862745 0.7568628 0.5921569
+
+newmtl roofRed
+Kd 0.6784314 0.2588235 0.2980392
+
+newmtl roofRedLight
+Kd 0.8470588 0.3215686 0.372549
+
+newmtl hay
+Kd 1 0.7483996 0.514151
+
+newmtl _defaultMat
+Kd 1 1 1
+
+newmtl stone
+Kd 0.6039216 0.7333333 0.7882353
+
+newmtl stoneDark
+Kd 0.5019608 0.6117647 0.6588235
+
+newmtl woodDark
+Kd 0.7764706 0.4666667 0.2941177
+
+newmtl water
+Kd 0.254902 0.854902 1
+
+newmtl foliage
+Kd 0.2265931 0.7169812 0.5854273

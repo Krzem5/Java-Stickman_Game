@@ -1,0 +1,18 @@
+mtllib 00-material.mtl
+v 0.67727 0.0 0.67727
+v 0.32273 0.0 0.67727
+v 0.67727 0.0 0.32273
+v 0.67727 1.0 0.67727
+v 0.32273 1.0 0.67727
+v 0.67727 1.0 0.32273
+g Mesh1 Grey_Cliff_Corner_Green_Top Model
+usemtl Stone
+f 1 2 3
+f 1 5 2
+f 1 4 5
+f 3 4 1
+f 3 6 4
+f 2 6 3
+f 2 5 6
+usemtl Leafs
+f 5 4 6

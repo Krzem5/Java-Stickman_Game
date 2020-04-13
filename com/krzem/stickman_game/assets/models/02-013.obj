@@ -1,0 +1,16 @@
+mtllib 02-material.mtl
+v 1.0 0.0 1.0
+v 0.0 0.0 1.0
+v 1.0 0.0 0.0
+v 0.0 0.0 0.0
+v 1.0 0.14 1.0
+v 0.0 0.14 1.0
+v 1.0 0.14 0.0
+v 0.0 0.14 0.0
+g fountainCenter
+usemtl stone
+f 3 2 1
+f 2 3 4
+usemtl water
+f 7 6 5
+f 6 7 8

@@ -1,0 +1,19 @@
+mtllib 00-material.mtl
+v 0.5 0.54483 0.5
+v 0.0 0.0 0.5
+v 0.5 0.0 0.5
+v 1.0 0.0 0.5
+v 0.5 0.0 0.0
+v 0.5 0.27241 0.5
+v 0.5 0.0 1.0
+g Mesh1 Gras
+usemtl Green_leafs
+f 3 1 2
+f 3 4 1
+f 3 1 4
+f 3 2 1
+g Mesh2 Gras
+f 5 3 6
+f 6 3 5
+f 7 6 3
+f 3 6 7
