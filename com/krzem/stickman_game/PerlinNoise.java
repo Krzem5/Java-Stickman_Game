@@ -4,6 +4,7 @@ package com.krzem.stickman_game;
 
 public class PerlinNoise extends Constants{
 	private static int[] p;
+	private static double[] o=new double[]{RANDOM_GEN.nextDouble()*PERLIN_NOISE_OFFSET_SCALE,RANDOM_GEN.nextDouble()*PERLIN_NOISE_OFFSET_SCALE,RANDOM_GEN.nextDouble()*PERLIN_NOISE_OFFSET_SCALE};
 
 
 
@@ -15,6 +16,9 @@ public class PerlinNoise extends Constants{
 				p[i+256]=p[i]=_p[i];
 			}
 		}
+		x+=PerlinNoise.o[0];
+		y+=PerlinNoise.o[1];
+		z+=PerlinNoise.o[2];
 		int X=(int)Math.floor(x)&255;
 		int Y=(int)Math.floor(y)&255;
 		int Z=(int)Math.floor(z)&255;

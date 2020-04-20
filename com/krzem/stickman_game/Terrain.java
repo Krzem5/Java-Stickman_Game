@@ -13,6 +13,7 @@ public class Terrain extends Constants{
 	public Main.Main_ cls;
 	public Game g;
 	public Map<String,Chunk> cl;
+	public int _gsm_o;
 
 
 
@@ -79,12 +80,13 @@ public class Terrain extends Constants{
 	private void _generate(GL2 gl){
 		this.cl=new HashMap<String,Chunk>();
 		this.cl.put("0,0",new Chunk(this.cls,this.g,this,0,0));
-		// this.cl.put("0,1",new Chunk(this.cls,this.g,this,0,1));
-		// this.cl.put("1,0",new Chunk(this.cls,this.g,this,1,0));
-		// this.cl.put("1,1",new Chunk(this.cls,this.g,this,1,1));
+		this.cl.put("0,1",new Chunk(this.cls,this.g,this,0,1));
+		this.cl.put("1,0",new Chunk(this.cls,this.g,this,1,0));
+		this.cl.put("1,1",new Chunk(this.cls,this.g,this,1,1));
 		for (Map.Entry<String,Chunk> e:this.cl.entrySet()){
 			e.getValue().update(gl);
 		}
+		this._gsm_o=this.cl.get("0,0").dt[0][0].th+0;
 		for (Map.Entry<String,Chunk> e:this.cl.entrySet()){
 			e.getValue().smooth_all();
 		}

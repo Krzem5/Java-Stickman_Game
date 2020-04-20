@@ -25,7 +25,6 @@ public class OBJFileLoader extends Constants{
 			return OBJFileLoader._cache.get(fp).clone();
 		}
 		try{
-			Model m=new Model(cls.cam,gl,fp);
 			String dt=new String(Files.readAllBytes(Paths.get(MODEL_FILE_PATH+fp))).replace("\r","");
 			List<Double> vl=new ArrayList<Double>();
 			List<double[]> vnl=new ArrayList<double[]>();
@@ -82,9 +81,21 @@ public class OBJFileLoader extends Constants{
 						break;
 				}
 			}
+			double[] mn=null;
+			double[] mx=null;
 			double[] va=new double[vl.size()];
-			for (int i=0;i<va.length;i++){
+			for (int i=0;i<va.length;i+=3){
 				va[i]=vl.get(i);
+				va[i+1]=vl.get(i+1);
+				va[i+2]=vl.get(i+2);
+				if (mn==null){
+					mn=new double[]{va[i]+0,va[i+1]+0,va[i+2]+0};
+					mx=new double[]{va[i]+0,va[i+1]+0,va[i+2]+0};
+				}
+				else{
+					mn=new double[]{Math.min(mn[0],va[i]),Math.min(mn[1],va[i+1]),Math.min(mn[2],va[i+2])};
+					mx=new double[]{Math.max(mx[0],va[i]),Math.max(mx[1],va[i+1]),Math.max(mx[2],va[i+2])};
+				}
 			}
 			short[] ia=new short[il.size()];
 			for (int i=0;i<ia.length;i++){
@@ -103,9 +114,8 @@ public class OBJFileLoader extends Constants{
 			for (int i=0;i<vna.length;i++){
 				vna[i]=vnl.get(i);
 			}
-			m.update(va,ia,ca,vna);
-			OBJFileLoader._cache.put(fp,m);
-			return m.clone();
+			OBJFileLoader._cache.put(fp,new Model(cls,gl,fp,va,ia,ca,vna,mx[1]-mn[1],new double[]{mx[0]/2-mn[0]/2,mx[1]/2-mn[1]/2,mx[2]/2-mn[2]/2},Math.sqrt((mx[0]/2-mn[0]/2)*(mx[0]/2-mn[0]/2)+(mx[1]/2-mn[1]/2)*(mx[1]/2-mn[1]/2)+(mx[2]/2-mn[2]/2)*(mx[2]/2-mn[2]/2))));
+			return OBJFileLoader._cache.get(fp).clone();
 		}
 		catch (Exception e){
 			e.printStackTrace();

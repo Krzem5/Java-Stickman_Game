@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.lang.Math;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 
 
@@ -18,13 +19,16 @@ public class Constants{
 	public static final Rectangle GUI_WINDOW_SIZE=new Rectangle(0,0,1920,1080);
 
 	public static final double EPSILON=Math.ulp(1d);
+	public static final Random RANDOM_GEN=new Random(123456);
+
+	public static final double PERLIN_NOISE_OFFSET_SCALE=40;
 
 	public static final String SKYBOX_IMAGE_FILE_PATH="./com/krzem/stickman_game/assets/img/skybox/";
 	public static final String MODEL_FILE_PATH="./com/krzem/stickman_game/assets/models/";
 	public static final String IMAGE_FILE_PATH="./com/krzem/stickman_game/assets/img/";
 	public static final String CURSOR_FILE_PATH="misc/";
 
-	public static final boolean MODEL_NORMALS=false;
+	public static final boolean MODEL_DEBUG=false;
 	public static final int MODEL_GROUP_NAME_LENGTH=2;
 	public static final Map<Integer,Integer> MODEL_NAME_LENGTH=new HashMap<Integer,Integer>(){{
 		this.put(0,2);
@@ -48,25 +52,39 @@ public class Constants{
 	public static final double CAMERA_EASE_PROC=0.85d;
 	public static final double CAMERA_MIN_ANGLE=75d;
 	public static final double CAMERA_MAX_ANGLE=135d;
-	public static final double CAMERA_INIT_DIST=400d; // 10
+	public static final double CAMERA_INIT_DIST=400d;// 10d;
 	public static final double CAMERA_MIN_DIST=1d;
 	public static final double CAMERA_MAX_DIST=400d;
-	public static final double CAMERA_CAM_NEAR=0.05d;
-	public static final double CAMERA_CAM_FAR=1000d;
+	public static final double CAMERA_NEAR=0.1d;
+	public static final double CAMERA_FAR=1000d;
+	public static final double CAMERA_VISIBILITY_BUFFOR=100d;
 
-	public static final int CHUNK_SIZE=32;// 32
+	public static final int CHUNK_SIZE=32;
 	public static final double CHUNK_GENERATION_NOISE_SCALE=2;
 	public static final double CHUNK_GENERATION_MAX_HEIGHT=20;
 	public static final int CHUNK_BLOCK_SIZE=8;
 	public static final double CHUNK_BLOCK_HEIGHT=0.55;
+	public static final double CHUNK_BLOCK_TERRIAIN_TREE_PROC=0.03;
+	public static final double CHUNK_BLOCK_TERRIAIN_TREE_THIN_PROC=0.65;
+	public static final double CHUNK_BLOCK_TERRIAIN_TREE_SIZE=10;
+	public static final double CHUNK_BLOCK_TERRIAIN_TREE_OFFSET_MARGIN=0.2;
 	public static final Map<String,String> CHUNK_BLOCK_NAME_LOOKUP_TABLE=new HashMap<String,String>(){{
 		this.put("grass_low",Constants._model(4,163));
 		this.put("grass_high",Constants._model(4,36));
 		this.put("grass_slope",Constants._model(4,152));
 		this.put("grass_corner_slope",Constants._model(4,140));
 		this.put("grass_corner_slope_high",Constants._model(4,37));
-		this.put("tmp1",Constants._model(4,154));
-		this.put("tmp2",Constants._model(4,194));
+		this.put("tree_thin",Constants._model(4,19));
+		this.put("tree_thick",Constants._model(4,20));
+		this.put("path_end",Constants._model(4,17));
+		this.put("path_straight",Constants._model(4,23));
+		this.put("path_straight_up",Constants._model(4,24));
+		this.put("path_straight_down",Constants._model(4,15));
+		this.put("path_straight_slope",Constants._model(4,18));
+		this.put("path_corner_small",Constants._model(4,22));
+		this.put("path_corner_big",Constants._model(4,16));
+		this.put("path_junction_3",Constants._model(4,13));
+		this.put("path_junction_4",Constants._model(4,14));
 	}};
 
 	public static final String DEFAULT_CURSOR_NAME="default";

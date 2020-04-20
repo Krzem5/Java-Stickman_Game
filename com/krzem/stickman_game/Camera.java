@@ -70,7 +70,7 @@ public class Camera extends Constants{
 		gl.glViewport(0,0,WINDOW_SIZE.width,WINDOW_SIZE.height);
 		gl.glMatrixMode(GL2.GL_PROJECTION);
 		gl.glLoadIdentity();
-		this.cls.glu.gluPerspective((float)this.fov,(float)WINDOW_SIZE.width/(float)WINDOW_SIZE.height,CAMERA_CAM_NEAR,CAMERA_CAM_FAR);
+		this.cls.glu.gluPerspective((float)this.fov,(float)WINDOW_SIZE.width/(float)WINDOW_SIZE.height,CAMERA_NEAR,CAMERA_FAR);
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();
 	}

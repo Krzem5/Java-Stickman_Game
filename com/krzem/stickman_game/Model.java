@@ -9,8 +9,8 @@ import java.nio.ShortBuffer;
 
 
 public class Model extends Constants{
+	public Main.Main_ cls;
 	public String nm;
-	private Camera _c;
 	private GL2 _gl;
 	private DoubleBuffer _vb=null;
 	private ShortBuffer _ib=null;
@@ -23,22 +23,25 @@ public class Model extends Constants{
 	private double _scl=1;
 	private double[] _off=new double[3];
 	private double[] _rot=new double[3];
+	private double _mh=0;
+	private double[] _msc=null;
+	private double _msr=0;
 
 
 
-	public Model(Camera c,GL2 gl,String nm){
-		this._c=c;
+	public Model(Main.Main_ cls,GL2 gl,String nm,double[] vl,short[] il,double[] cl,double[][] vnl,double mh,double[] msc,double msr){
+		this.cls=cls;
 		this._gl=gl;
 		this.nm=nm;
+		this.update(vl,il,cl,vnl);
+		this._mh=mh;
+		this._msc=msc;
+		this._msr=msr;
 	}
 
 
 
 	public Model clone(){
-		Model o=new Model(this._c,this._gl,this.nm);
-		o._scl=this._scl+0;
-		o._off=new double[]{this._off[0]+0,this._off[1]+0,this._off[2]+0};
-		o._rot=new double[]{this._rot[0]+0,this._rot[1]+0,this._rot[2]+0};
 		double[] nvl=new double[this._vb.capacity()];
 		for (int i=0;i<nvl.length;i++){
 			nvl[i]=this._vb.get(i)+0;
@@ -51,7 +54,15 @@ public class Model extends Constants{
 		for (int i=0;i<ncl.length;i++){
 			ncl[i]=this._cb.get(i)+0;
 		}
-		o.update(nvl,nil,ncl,this._vnl);
+		double[][] nvnl=new double[this._vnl.length][2];
+		for (int i=0;i<nvnl.length;i++){
+			nvnl[i]=new double[]{this._vnl[i][0],this._vnl[i][1]};
+		}
+		Model o=new Model(this.cls,this._gl,this.nm,nvl,nil,ncl,nvnl,this._mh+0,new double[]{this._msc[0],this._msc[1],this._msc[2]},this._msr+0);
+		o._scl=this._scl+0;
+		o._off=new double[]{this._off[0]+0,this._off[1]+0,this._off[2]+0};
+		o._rot=new double[]{this._rot[0]+0,this._rot[1]+0,this._rot[2]+0};
+		// System.out.printf("%s => %f (%f)\n",java.util.Arrays.toString(this._msc),this._msr,this._mh);
 		return o;
 	}
 
@@ -60,11 +71,17 @@ public class Model extends Constants{
 	public void scale(double v){
 		double nv=v/this._scl;
 		this._scl=v;
+		this._mh=0;
 		for (int i=0;i<this._vb.capacity();i+=3){
 			this._vb.put(i,(this._vb.get(i)-this._off[0])*nv+this._off[0]);
 			this._vb.put(i+1,(this._vb.get(i+1)-this._off[1])*nv+this._off[1]);
 			this._vb.put(i+2,(this._vb.get(i+2)-this._off[2])*nv+this._off[2]);
+			this._mh=Math.max(this._mh,this._vb.get(i+1)-this._off[1]);
 		}
+		for (int i=0;i<3;i++){
+			this._msc[i]=(this._msc[i]-this._off[i])*nv+this._off[i];
+		}
+		this._msr*=nv;
 		this._gl.glBindBuffer(GL2.GL_ARRAY_BUFFER,this._v_id);
 		this._gl.glBufferData(GL2.GL_ARRAY_BUFFER,this._vb.capacity()*8,this._vb,GL2.GL_STATIC_DRAW);
 		this._gl.glBindBuffer(GL2.GL_ARRAY_BUFFER,0);
@@ -83,6 +100,9 @@ public class Model extends Constants{
 			this._vb.put(i+1,this._vb.get(i+1)+ny);
 			this._vb.put(i+2,this._vb.get(i+2)+nz);
 		}
+		this._msc[0]+=nx;
+		this._msc[1]+=ny;
+		this._msc[2]+=nz;
 		this._gl.glBindBuffer(GL2.GL_ARRAY_BUFFER,this._v_id);
 		this._gl.glBufferData(GL2.GL_ARRAY_BUFFER,this._vb.capacity()*8,this._vb,GL2.GL_STATIC_DRAW);
 		this._gl.glBindBuffer(GL2.GL_ARRAY_BUFFER,0);
@@ -96,6 +116,7 @@ public class Model extends Constants{
 		double nb=this._rot[1]-b;
 		double nc=this._rot[2]-c;
 		this._rot=new double[]{a,b,c};
+		this._mh=0;
 		for (int i=0;i<this._vb.capacity();i+=3){
 			double x=this._vb.get(i)-this._off[0]-this._scl/2;
 			double y=this._vb.get(i+1)-this._off[1]-this._scl;
@@ -103,6 +124,7 @@ public class Model extends Constants{
 			this._vb.put(i,x*Math.cos(na)*Math.cos(nb)+y*(Math.cos(na)*Math.sin(nb)*Math.sin(nc)-Math.sin(na)*Math.cos(nc))+z*(Math.cos(na)*Math.sin(nb)*Math.cos(nc)+Math.sin(na)*Math.sin(nc))+this._off[0]+this._scl/2);
 			this._vb.put(i+1,x*Math.sin(na)*Math.cos(nb)+y*(Math.sin(na)*Math.sin(nb)*Math.sin(nc)+Math.cos(na)*Math.cos(nc))+z*(Math.sin(na)*Math.sin(nb)*Math.cos(nc)-Math.cos(na)*Math.sin(nc))+this._off[1]+this._scl);
 			this._vb.put(i+2,-x*Math.sin(nb)+y*Math.cos(nb)*Math.sin(nc)+z*Math.cos(nb)*Math.cos(nc)+this._off[2]+this._scl/2);
+			this._mh=Math.max(this._mh,this._vb.get(i+1)-this._off[1]);
 		}
 		for (int i=0;i<this._vnl.length;i++){
 			double[] fvn=this._normal(this._vb.array(),this._ib.get(i*3)*3,this._ib.get(i*3+1)*3,this._ib.get(i*3+2)*3);
@@ -145,7 +167,7 @@ public class Model extends Constants{
 			if (v<0||u+v>1){
 				continue;
 			}
-			double ln=f*(e2[0]*q[0]+e2[1]*q[1]+e2[2]*q[2])-CAMERA_CAM_NEAR*2;
+			double ln=f*(e2[0]*q[0]+e2[1]*q[1]+e2[2]*q[2])-CAMERA_NEAR*2;
 			if (ln>EPSILON){
 				rl=Math.max(rl,ln);
 			}
@@ -156,11 +178,7 @@ public class Model extends Constants{
 
 
 	public double height(){
-		double mx=0;
-		for (int i=0;i<this._vb.capacity();i+=3){
-			mx=Math.max(mx,this._vb.get(i+1)-this._off[1]);
-		}
-		return mx;
+		return this._mh;
 	}
 
 
@@ -217,6 +235,9 @@ public class Model extends Constants{
 
 
 	public void draw(GL2 gl){
+		if ((this._msc[0]-this.cls.cam.x)*(this._msc[0]-this.cls.cam.x)+(this._msc[1]-this.cls.cam.y)*(this._msc[1]-this.cls.cam.y)+(this._msc[2]-this.cls.cam.z)*(this._msc[2]-this.cls.cam.z)>=(this._msr+CAMERA_FAR+CAMERA_VISIBILITY_BUFFOR)*(this._msr+CAMERA_FAR+CAMERA_VISIBILITY_BUFFOR)){
+			return;
+		}
 		gl.glProvokingVertex(GL2.GL_FIRST_VERTEX_CONVENTION);
 		gl.glShadeModel(GL2.GL_FLAT);
 		gl.glEnableClientState(GL2.GL_VERTEX_ARRAY);
@@ -230,13 +251,16 @@ public class Model extends Constants{
 		gl.glDisableClientState(GL2.GL_VERTEX_ARRAY);
 		gl.glDisableClientState(GL2.GL_COLOR_ARRAY);
 		gl.glShadeModel(GL2.GL_SMOOTH);
-		if (MODEL_NORMALS==true){
+		if (MODEL_DEBUG==true){
 			gl.glBegin(GL2.GL_LINES);
+			gl.glColor3d(0,0,1);
+			gl.glVertex3d(this._msc[0],this._msc[1],this._msc[2]);
+			gl.glVertex3d(this._msc[0],this._msc[1]+this._msr,this._msc[2]);
 			gl.glColor3d(1,0,0);
 			for (int i=0;i<this._vnl.length;i++){
 				double[] p=new double[]{this._vb.get(this._ib.get(i*3)*3)/3+this._vb.get(this._ib.get(i*3+1)*3)/3+this._vb.get(this._ib.get(i*3+2)*3)/3,this._vb.get(this._ib.get(i*3)*3+1)/3+this._vb.get(this._ib.get(i*3+1)*3+1)/3+this._vb.get(this._ib.get(i*3+2)*3+1)/3,this._vb.get(this._ib.get(i*3)*3+2)/3+this._vb.get(this._ib.get(i*3+1)*3+2)/3+this._vb.get(this._ib.get(i*3+2)*3+2)/3};
 				gl.glVertex3d(p[0],p[1],p[2]);
-				gl.glVertex3d(p[0]+Math.sin(this._vnl[i][0])*Math.cos(this._vnl[i][1]),p[1]+Math.cos(this._vnl[i][0]),p[2]+Math.sin(this._vnl[i][0])*Math.sin(this._vnl[i][1]));
+				gl.glVertex3d(p[0]+this._scl/2*Math.sin(this._vnl[i][0])*Math.cos(this._vnl[i][1]),p[1]+this._scl/2*Math.cos(this._vnl[i][0]),p[2]+this._scl/2*Math.sin(this._vnl[i][0])*Math.sin(this._vnl[i][1]));
 			}
 			gl.glEnd();
 		}

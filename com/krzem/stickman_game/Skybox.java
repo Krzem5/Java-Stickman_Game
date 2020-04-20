@@ -5,8 +5,12 @@ package com.krzem.stickman_game;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.lang.Exception;
+import java.lang.Math;
 import javax.imageio.ImageIO;
 
 
@@ -117,20 +121,23 @@ public class Skybox extends Constants{
 
 	private void _load(GL2 gl,String fp){
 		this._imgl=new Texture[6];
-		this._imgl[0]=this._read(gl,fp+"front.png");
-		this._imgl[1]=this._read(gl,fp+"top.png");
-		this._imgl[2]=this._read(gl,fp+"left.png");
-		this._imgl[3]=this._read(gl,fp+"back.png");
-		this._imgl[4]=this._read(gl,fp+"bottom.png");
-		this._imgl[5]=this._read(gl,fp+"right.png");
-		this._sz=this._imgl[0].getImageWidth()/2;
+		this._sz=(int)(CAMERA_FAR/Math.sqrt(3));
+		this._imgl[0]=this._read(gl,fp+"front.png",this._sz);
+		this._imgl[1]=this._read(gl,fp+"top.png",this._sz);
+		this._imgl[2]=this._read(gl,fp+"left.png",this._sz);
+		this._imgl[3]=this._read(gl,fp+"back.png",this._sz);
+		this._imgl[4]=this._read(gl,fp+"bottom.png",this._sz);
+		this._imgl[5]=this._read(gl,fp+"right.png",this._sz);
 	}
 
 
 
-	private Texture _read(GL2 gl,String fp){
+	private Texture _read(GL2 gl,String fp,int sz){
 		try{
-			return AWTTextureIO.newTexture(gl.getGLProfile(),ImageIO.read(new File(fp)),true);
+			BufferedImage img=ImageIO.read(new File(fp));
+			BufferedImage o=new BufferedImage(sz,sz,BufferedImage.TYPE_INT_ARGB);
+			o=new AffineTransformOp(AffineTransform.getScaleInstance((double)sz/img.getWidth(),(double)sz/img.getHeight()),AffineTransformOp.TYPE_NEAREST_NEIGHBOR).filter(img,o);
+			return AWTTextureIO.newTexture(gl.getGLProfile(),o,true);
 		}
 		catch (Exception e){
 			e.printStackTrace();
