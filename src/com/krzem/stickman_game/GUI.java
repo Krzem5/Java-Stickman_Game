@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
@@ -112,7 +113,9 @@ public class GUI extends Constants{
 	private BufferedImage _get_image(String fp){
 		try{
 			if (this._img_cache.get(fp)==null){
-				this._img_cache.put(fp,ImageIO.read(new File(IMAGE_FILE_PATH+fp+".png")));
+				InputStream is=Skybox.class.getResourceAsStream(IMAGE_FILE_PATH+fp+".png");
+				this._img_cache.put(fp,ImageIO.read(is));
+				is.close();
 			}
 			return this._img_cache.get(fp);
 		}

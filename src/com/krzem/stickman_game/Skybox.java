@@ -9,6 +9,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.InputStream;
 import java.lang.Exception;
 import java.lang.Math;
 import javax.imageio.ImageIO;
@@ -134,10 +135,10 @@ public class Skybox extends Constants{
 
 	private Texture _read(GL2 gl,String fp,int sz){
 		try{
-			BufferedImage img=ImageIO.read(new File(fp));
-			BufferedImage o=new BufferedImage(sz,sz,BufferedImage.TYPE_INT_ARGB);
-			o=new AffineTransformOp(AffineTransform.getScaleInstance((double)sz/img.getWidth(),(double)sz/img.getHeight()),AffineTransformOp.TYPE_NEAREST_NEIGHBOR).filter(img,o);
-			return AWTTextureIO.newTexture(gl.getGLProfile(),o,true);
+			InputStream is=Skybox.class.getResourceAsStream(fp);
+			BufferedImage img=ImageIO.read(is);
+			is.close();
+			return AWTTextureIO.newTexture(gl.getGLProfile(),new AffineTransformOp(AffineTransform.getScaleInstance((double)sz/img.getWidth(),(double)sz/img.getHeight()),AffineTransformOp.TYPE_NEAREST_NEIGHBOR).filter(img,new BufferedImage(sz,sz,BufferedImage.TYPE_INT_ARGB)),true);
 		}
 		catch (Exception e){
 			e.printStackTrace();

@@ -5,6 +5,11 @@ package com.krzem.stickman_game;
 import com.jogamp.opengl.GL2;
 import java.lang.Exception;
 import java.lang.Math;
+import java.io.InputStream;
+import java.io.Reader;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -25,7 +30,9 @@ public class OBJFileLoader extends Constants{
 			return OBJFileLoader._cache.get(fp).clone();
 		}
 		try{
-			String dt=new String(Files.readAllBytes(Paths.get(MODEL_FILE_PATH+fp))).replace("\r","");
+			InputStream is=OBJFileLoader.class.getResourceAsStream(MODEL_FILE_PATH+fp);
+			String dt=new String(OBJFileLoader._read_data(is)).replace("\r","");
+			is.close();
 			List<Double> vl=new ArrayList<Double>();
 			List<double[]> vnl=new ArrayList<double[]>();
 			List<Short> il=new ArrayList<Short>();
@@ -39,7 +46,9 @@ public class OBJFileLoader extends Constants{
 							cm=OBJFileLoader._mat_cache.get(l.substring(7));
 							break;
 						}
-						String mdt=new String(Files.readAllBytes(Paths.get(MODEL_FILE_PATH+l.substring(7)))).replace("\r","");
+						is=OBJFileLoader.class.getResourceAsStream(MODEL_FILE_PATH+l.substring(7));
+						String mdt=new String(OBJFileLoader._read_data(is)).replace("\r","");
+						is.close();
 						String c_nm=null;
 						for (String ml:mdt.split("\n")){
 							switch (ml.split(" ")[0]){
@@ -130,5 +139,27 @@ public class OBJFileLoader extends Constants{
 		double[] u=new double[]{vl.get(bi)-vl.get(ai),vl.get(bi+1)-vl.get(ai+1),vl.get(bi+2)-vl.get(ai+2)};
 		double[] v=new double[]{vl.get(ci)-vl.get(ai),vl.get(ci+1)-vl.get(ai+1),vl.get(ci+2)-vl.get(ai+2)};
 		return new double[]{u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]};
+	}
+
+
+
+	private static String _read_data(InputStream is){
+		final char[] bf=new char[4096];
+		final StringBuilder o=new StringBuilder();
+		try (Reader r=new InputStreamReader(is,"UTF-8")){
+			while (true){
+				int sz=r.read(bf,0,bf.length);
+				if (sz<0)
+					break;
+				o.append(bf,0,sz);
+			}
+		}
+		catch (UnsupportedEncodingException ex){
+			ex.printStackTrace();
+		}
+		catch (IOException ex){
+			ex.printStackTrace();
+		}
+		return o.toString();
 	}
 }

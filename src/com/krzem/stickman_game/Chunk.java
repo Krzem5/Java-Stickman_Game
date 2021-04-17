@@ -130,14 +130,14 @@ public class Chunk extends Constants{
 						b_cls.tl.add(Math.max(b_cls.tl.size()-1,0),"grass_low");
 					}
 				}
-				System.out.println(this._count(b_cls.tl,"grass_low"));
+				// System.out.println(this._count(b_cls.tl,"grass_low"));
 				for (int i=0;i<o-b_cls._sm_o;i++){
 					if (b_cls.tl.lastIndexOf("grass_low")==-1){
 						break;
 					}
 					b_cls.tl.remove(b_cls.tl.lastIndexOf("grass_low"));
 				}
-				System.out.println(this._count(b_cls.tl,"grass_low"));
+				// System.out.println(this._count(b_cls.tl,"grass_low"));
 				o=-o;
 				if (b_cls.tl.size()==0){
 					b_cls.tl.add("grass_low");
@@ -286,7 +286,7 @@ public class Chunk extends Constants{
 		}
 		for (Block b:sbl){
 			if (b.z==0&&this.oz==0){
-				System.out.println(b.tl);
+				// System.out.println(b.tl);
 			}
 		}
 	}

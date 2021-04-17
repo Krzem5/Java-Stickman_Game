@@ -23,9 +23,9 @@ public class Constants{
 
 	public static final double PERLIN_NOISE_OFFSET_SCALE=40;
 
-	public static final String SKYBOX_IMAGE_FILE_PATH="./com/krzem/stickman_game/assets/img/skybox/";
-	public static final String MODEL_FILE_PATH="./com/krzem/stickman_game/assets/models/";
-	public static final String IMAGE_FILE_PATH="./com/krzem/stickman_game/assets/img/";
+	public static final String SKYBOX_IMAGE_FILE_PATH="/rsrc/skybox/";
+	public static final String MODEL_FILE_PATH="/rsrc/models/";
+	public static final String IMAGE_FILE_PATH="/rsrc/";
 	public static final String CURSOR_FILE_PATH="misc/";
 
 	public static final boolean MODEL_DEBUG=false;
@@ -95,28 +95,28 @@ public class Constants{
 		return String.format(String.format("%%%ds-%%%ds.obj",MODEL_GROUP_NAME_LENGTH,MODEL_NAME_LENGTH.get(gi)),gi,mi).replace(" ","0");
 	}
 
-	// public static final double[] STICKMAN_POS_OFFSET=new double[]{0,5.65,0};
-	// public static final Map<String,Double> STICKMAN_JOIN_LENGTHS=new HashMap<String,Double>(){{
-	// 	this.put("Lleg",6d);
-	// 	this.put("Rleg",6.d);
-	// 	this.put("torso",2.8d);
-	// 	this.put("Larm",3d);
-	// 	this.put("Rarm",3d);
-	// 	this.put("neck",0.4d);
-	// 	this.put("head",2d);
-	// 	this.put("Lhead",1.4d);
-	// 	this.put("Rhead",1.4d);
-	// }};
-	// public static final Map<String,double[]> STICKMAN_DEFAULT_JOIN_ROTATIONS=new HashMap<String,double[]>(){{
-	// 	this.put("body",new double[]{0,0,0});
-	// 	this.put("Lleg",new double[]{Math.PI*0.9,0,0});
-	// 	this.put("Rleg",new double[]{-Math.PI*0.9,0,0});
-	// 	this.put("torso",new double[]{0,0,0});
-	// 	this.put("Larm",new double[]{Math.PI*0.8,0,0});
-	// 	this.put("Rarm",new double[]{-Math.PI*0.8,0,0});
-	// 	this.put("neck",new double[]{0,0,0});
-	// 	this.put("head",new double[]{0,0,0});
-	// 	this.put("Lhead",new double[]{Math.PI/2,0,0});
-	// 	this.put("Rhead",new double[]{-Math.PI/2,0,0});
-	// }};
+	public static final double[] STICKMAN_POS_OFFSET=new double[]{0,5.65,0};
+	public static final Map<String,Double> STICKMAN_JOIN_LENGTHS=new HashMap<String,Double>(){{
+		this.put("Lleg",6d);
+		this.put("Rleg",6.d);
+		this.put("torso",2.8d);
+		this.put("Larm",3d);
+		this.put("Rarm",3d);
+		this.put("neck",0.4d);
+		this.put("head",2d);
+		this.put("Lhead",1.4d);
+		this.put("Rhead",1.4d);
+	}};
+	public static final Map<String,double[]> STICKMAN_DEFAULT_JOIN_ROTATIONS=new HashMap<String,double[]>(){{
+		this.put("body",new double[]{0,0,0});
+		this.put("Lleg",new double[]{Math.PI*0.9,0,0});
+		this.put("Rleg",new double[]{-Math.PI*0.9,0,0});
+		this.put("torso",new double[]{0,0,0});
+		this.put("Larm",new double[]{Math.PI*0.8,0,0});
+		this.put("Rarm",new double[]{-Math.PI*0.8,0,0});
+		this.put("neck",new double[]{0,0,0});
+		this.put("head",new double[]{0,0,0});
+		this.put("Lhead",new double[]{Math.PI/2,0,0});
+		this.put("Rhead",new double[]{-Math.PI/2,0,0});
+	}};
 }
