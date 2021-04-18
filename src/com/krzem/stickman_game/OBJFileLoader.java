@@ -31,7 +31,7 @@ public class OBJFileLoader extends Constants{
 		}
 		try{
 			InputStream is=OBJFileLoader.class.getResourceAsStream(MODEL_FILE_PATH+fp);
-			String dt=new String(OBJFileLoader._read_data(is)).replace("\r","");
+			String dt=OBJFileLoader._read_data(is).replace("\r","");
 			is.close();
 			List<Double> vl=new ArrayList<Double>();
 			List<double[]> vnl=new ArrayList<double[]>();
@@ -47,7 +47,7 @@ public class OBJFileLoader extends Constants{
 							break;
 						}
 						is=OBJFileLoader.class.getResourceAsStream(MODEL_FILE_PATH+l.substring(7));
-						String mdt=new String(OBJFileLoader._read_data(is)).replace("\r","");
+						String mdt=OBJFileLoader._read_data(is).replace("\r","");
 						is.close();
 						String c_nm=null;
 						for (String ml:mdt.split("\n")){
@@ -122,6 +122,9 @@ public class OBJFileLoader extends Constants{
 			double[][] vna=new double[vnl.size()][2];
 			for (int i=0;i<vna.length;i++){
 				vna[i]=vnl.get(i);
+			}
+			if (mn==null||mx==null){
+				throw new NullPointerException();
 			}
 			OBJFileLoader._cache.put(fp,new Model(cls,gl,fp,va,ia,ca,vna,mx[1]-mn[1],new double[]{mx[0]/2-mn[0]/2,mx[1]/2-mn[1]/2,mx[2]/2-mn[2]/2},Math.sqrt((mx[0]/2-mn[0]/2)*(mx[0]/2-mn[0]/2)+(mx[1]/2-mn[1]/2)*(mx[1]/2-mn[1]/2)+(mx[2]/2-mn[2]/2)*(mx[2]/2-mn[2]/2))));
 			return OBJFileLoader._cache.get(fp).clone();

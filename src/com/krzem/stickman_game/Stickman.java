@@ -49,16 +49,6 @@ public class Stickman extends Constants{
 		this.jl.get("Larm")[2]+=this._laxs.next();
 		this.jl.get("Rarm")[0]+=this._razs.next();
 		this.jl.get("Rarm")[2]+=this._raxs.next();
-		double[] b=this._add(this._rot(STICKMAN_POS_OFFSET,this.jl.get("body")),this.pos);
-		double[] ll=this._add(b,this._rot(new double[]{0,STICKMAN_JOIN_LENGTHS.get("Lleg"),0},this.jl.get("body"),this.jl.get("Lleg")));
-		double[] rl=this._add(b,this._rot(new double[]{0,STICKMAN_JOIN_LENGTHS.get("Rleg"),0},this.jl.get("body"),this.jl.get("Rleg")));
-		double[] t=this._add(b,this._rot(new double[]{0,STICKMAN_JOIN_LENGTHS.get("torso"),0},this.jl.get("body"),this.jl.get("torso")));
-		double[] la=this._add(t,this._rot(new double[]{0,STICKMAN_JOIN_LENGTHS.get("Larm"),0},this.jl.get("body"),this.jl.get("torso"),this.jl.get("Larm")));
-		double[] ra=this._add(t,this._rot(new double[]{0,STICKMAN_JOIN_LENGTHS.get("Rarm"),0},this.jl.get("body"),this.jl.get("torso"),this.jl.get("Rarm")));
-		double[] n=this._add(t,this._rot(new double[]{0,STICKMAN_JOIN_LENGTHS.get("neck"),0},this.jl.get("body"),this.jl.get("torso"),this.jl.get("neck")));
-		double[] h=this._add(n,this._rot(new double[]{0,STICKMAN_JOIN_LENGTHS.get("head"),0},this.jl.get("body"),this.jl.get("torso"),this.jl.get("neck"),this.jl.get("head")));
-		double[] lh=this._add(h,this._rot(new double[]{0,STICKMAN_JOIN_LENGTHS.get("Lhead"),0},this.jl.get("body"),this.jl.get("torso"),this.jl.get("neck"),this.jl.get("head"),this.jl.get("Lhead")));
-		double[] rh=this._add(h,this._rot(new double[]{0,STICKMAN_JOIN_LENGTHS.get("Rhead"),0},this.jl.get("body"),this.jl.get("torso"),this.jl.get("neck"),this.jl.get("head"),this.jl.get("Rhead")));
 	}
 
 

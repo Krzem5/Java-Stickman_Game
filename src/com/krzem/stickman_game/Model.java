@@ -41,6 +41,7 @@ public class Model extends Constants{
 
 
 
+	@Override
 	public Model clone(){
 		double[] nvl=new double[this._vb.capacity()];
 		for (int i=0;i<nvl.length;i++){
@@ -83,7 +84,7 @@ public class Model extends Constants{
 		}
 		this._msr*=nv;
 		this._gl.glBindBuffer(GL2.GL_ARRAY_BUFFER,this._v_id);
-		this._gl.glBufferData(GL2.GL_ARRAY_BUFFER,this._vb.capacity()*8,this._vb,GL2.GL_STATIC_DRAW);
+		this._gl.glBufferData(GL2.GL_ARRAY_BUFFER,this._vb.capacity()*((long)8),this._vb,GL2.GL_STATIC_DRAW);
 		this._gl.glBindBuffer(GL2.GL_ARRAY_BUFFER,0);
 		this._recalc_light();
 	}
@@ -104,7 +105,7 @@ public class Model extends Constants{
 		this._msc[1]+=ny;
 		this._msc[2]+=nz;
 		this._gl.glBindBuffer(GL2.GL_ARRAY_BUFFER,this._v_id);
-		this._gl.glBufferData(GL2.GL_ARRAY_BUFFER,this._vb.capacity()*8,this._vb,GL2.GL_STATIC_DRAW);
+		this._gl.glBufferData(GL2.GL_ARRAY_BUFFER,this._vb.capacity()*((long)8),this._vb,GL2.GL_STATIC_DRAW);
 		this._gl.glBindBuffer(GL2.GL_ARRAY_BUFFER,0);
 		this._recalc_light();
 	}
@@ -131,7 +132,7 @@ public class Model extends Constants{
 			this._vnl[i]=new double[]{Math.acos(fvn[1]/Math.sqrt(fvn[0]*fvn[0]+fvn[1]*fvn[1]+fvn[2]*fvn[2])),Math.atan2(fvn[2],fvn[0])};
 		}
 		this._gl.glBindBuffer(GL2.GL_ARRAY_BUFFER,this._v_id);
-		this._gl.glBufferData(GL2.GL_ARRAY_BUFFER,this._vb.capacity()*8,this._vb,GL2.GL_STATIC_DRAW);
+		this._gl.glBufferData(GL2.GL_ARRAY_BUFFER,this._vb.capacity()*((long)8),this._vb,GL2.GL_STATIC_DRAW);
 		this._gl.glBindBuffer(GL2.GL_ARRAY_BUFFER,0);
 		this._recalc_light();
 	}
@@ -187,14 +188,14 @@ public class Model extends Constants{
 		if (this._vb==null){
 			this._vb=DoubleBuffer.wrap(vl);
 		}
-		else if (vl!=null){
+		else{
 			this._vb.put(vl);
 			this._vb.flip();
 		}
 		if (this._ib==null){
 			this._ib=ShortBuffer.wrap(il);
 		}
-		else if (il!=null){
+		else{
 			this._ib.put(il);
 			this._ib.flip();
 		}
@@ -205,7 +206,7 @@ public class Model extends Constants{
 			}
 			this._cb=DoubleBuffer.wrap(cl);
 		}
-		else if (cl!=null){
+		else{
 			this._cl=new double[cl.length];
 			for (int i=0;i<cl.length;i++){
 				this._cl[i]=cl[i]+0;
@@ -219,15 +220,15 @@ public class Model extends Constants{
 			this._gl.glGenBuffers(3,tmp,0);
 			this._v_id=tmp[0];
 			this._gl.glBindBuffer(GL2.GL_ARRAY_BUFFER,this._v_id);
-			this._gl.glBufferData(GL2.GL_ARRAY_BUFFER,this._vb.capacity()*8,this._vb,GL2.GL_STATIC_DRAW);
+			this._gl.glBufferData(GL2.GL_ARRAY_BUFFER,this._vb.capacity()*((long)8),this._vb,GL2.GL_STATIC_DRAW);
 			this._gl.glBindBuffer(GL2.GL_ARRAY_BUFFER,0);
 			this._i_id=tmp[1];
 			this._gl.glBindBuffer(GL2.GL_ARRAY_BUFFER,this._i_id);
-			this._gl.glBufferData(GL2.GL_ARRAY_BUFFER,this._ib.capacity()*2,this._ib,GL2.GL_STATIC_DRAW);
+			this._gl.glBufferData(GL2.GL_ARRAY_BUFFER,this._ib.capacity()*((long)2),this._ib,GL2.GL_STATIC_DRAW);
 			this._gl.glBindBuffer(GL2.GL_ARRAY_BUFFER,0);
 			this._c_id=tmp[2];
 			this._gl.glBindBuffer(GL2.GL_ARRAY_BUFFER,this._c_id);
-			this._gl.glBufferData(GL2.GL_ARRAY_BUFFER,this._cb.capacity()*8,this._cb,GL2.GL_STATIC_DRAW);
+			this._gl.glBufferData(GL2.GL_ARRAY_BUFFER,this._cb.capacity()*((long)8),this._cb,GL2.GL_STATIC_DRAW);
 			this._gl.glBindBuffer(GL2.GL_ARRAY_BUFFER,0);
 		}
 	}
@@ -282,7 +283,7 @@ public class Model extends Constants{
 			this._cb.put(this._ib.get(i*3)*3+2,this._map(v,0,1,this._cl[this._ib.get(i*3)*3+2],this._cl[this._ib.get(i*3)*3+2]/3));
 		}
 		this._gl.glBindBuffer(GL2.GL_ARRAY_BUFFER,this._c_id);
-		this._gl.glBufferData(GL2.GL_ARRAY_BUFFER,this._cb.capacity()*8,this._cb,GL2.GL_STATIC_DRAW);
+		this._gl.glBufferData(GL2.GL_ARRAY_BUFFER,this._cb.capacity()*((long)8),this._cb,GL2.GL_STATIC_DRAW);
 		this._gl.glBindBuffer(GL2.GL_ARRAY_BUFFER,0);
 	}
 

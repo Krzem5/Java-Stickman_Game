@@ -15,6 +15,7 @@ public class Vector extends Constants{
 
 
 
+	@Override
 	public Vector clone(){
 		return new Vector(this.x,this.y);
 	}
